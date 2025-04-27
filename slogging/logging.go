@@ -24,19 +24,15 @@ func New(ctx context.Context) *Logger {
 	}
 }
 
-func (l *Logger) Info(msg string) {
+func (l *Logger) Info() {
 	log.Info().
 		Str(XRequestID, l.requestID).
-		Str(APIID, l.apiID).
-		Caller().
-		Msg(msg)
+		Str(APIID, l.apiID)
 }
 
-func (l *Logger) Error(err error, msg string) {
+func (l *Logger) Error(err error) {
 	log.Error().
 		Str(XRequestID, l.requestID).
 		Str(APIID, l.apiID).
-		Err(err).
-		Caller().
-		Msg(msg)
+		Err(err)
 }
