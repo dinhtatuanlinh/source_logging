@@ -2,6 +2,7 @@ package slogging
 
 import (
 	"context"
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
@@ -24,14 +25,14 @@ func New(ctx context.Context) *Logger {
 	}
 }
 
-func (l *Logger) Info() {
-	log.Info().
+func (l *Logger) Info() *zerolog.Event {
+	return log.Info().
 		Str(XRequestID, l.requestID).
 		Str(APIID, l.apiID)
 }
 
-func (l *Logger) Error(err error) {
-	log.Error().
+func (l *Logger) Error(err error) *zerolog.Event {
+	return log.Error().
 		Str(XRequestID, l.requestID).
 		Str(APIID, l.apiID).
 		Err(err)
