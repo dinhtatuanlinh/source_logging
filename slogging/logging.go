@@ -52,7 +52,6 @@ func (l *Logger) Error(err error) *zerolog.Event {
 type Options struct {
 	Service     string
 	Environment string
-	Version     string
 	Pretty      bool // keep false in prod for JSON
 	Level       string
 	WithCaller  bool
@@ -127,8 +126,7 @@ func Init(opt Options) {
 
 	fields := base.With().
 		Str("service", opt.Service).
-		Str("env", opt.Environment).
-		Str("version", opt.Version)
+		Str("env", opt.Environment)
 
 	if opt.WithCaller {
 		zerolog.CallerMarshalFunc = func(pc uintptr, file string, line int) string {
