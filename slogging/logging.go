@@ -70,11 +70,12 @@ type Options struct {
 type ctxKey string
 
 const (
-	ctxLoggerKey     ctxKey = "logger"
-	ctxReqIDKey      ctxKey = "request_id"
-	ctxOperatorIDKey ctxKey = "operator_id"
-	ctxTraceIDKey    ctxKey = "trace_id"
-	ctxApiIDKey      ctxKey = "api_id"
+	ctxLoggerKey       ctxKey = "logger"
+	ctxReqIDKey        ctxKey = "request_id"
+	ctxOperatorNameKey ctxKey = "operator_name"
+	ctxRoleKey         ctxKey = "role"
+	ctxTraceIDKey      ctxKey = "trace_id"
+	ctxApiIDKey        ctxKey = "api_id"
 )
 
 // Init sets the global logger (log.Logger) and base fields.
@@ -182,8 +183,11 @@ func WithRequestID(ctx context.Context, reqID string) context.Context {
 func WithAPIID(ctx context.Context, apiID string) context.Context {
 	return IntoContext(context.WithValue(ctx, ctxApiIDKey, apiID), "api_id", apiID)
 }
-func WithOperatorID(ctx context.Context, operatorID string) context.Context {
-	return IntoContext(context.WithValue(ctx, ctxOperatorIDKey, operatorID), "operator_id", operatorID)
+func WithOperatorName(ctx context.Context, operatorID string) context.Context {
+	return IntoContext(context.WithValue(ctx, ctxOperatorNameKey, operatorID), "operator_name", operatorID)
+}
+func WithRole(ctx context.Context, role any) context.Context {
+	return IntoContext(context.WithValue(ctx, ctxRoleKey, role), "role", role)
 }
 func WithTraceID(ctx context.Context, traceID string) context.Context {
 	return IntoContext(context.WithValue(ctx, ctxTraceIDKey, traceID), "trace_id", traceID)
@@ -195,12 +199,18 @@ func RequestID(ctx context.Context) string {
 	}
 	return ""
 }
+
 func OperatorID(ctx context.Context) string {
-	if v, ok := ctx.Value(ctxOperatorIDKey).(string); ok {
+	if v, ok := ctx.Value(ctxOperatorNameKey).(string); ok {
 		return v
 	}
 	return ""
 }
+
+func Role(ctx context.Context) any {
+	return ctx.Value(ctxRoleKey)
+}
+
 func TraceID(ctx context.Context) string {
 	if v, ok := ctx.Value(ctxTraceIDKey).(string); ok {
 		return v
