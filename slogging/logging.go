@@ -209,6 +209,13 @@ func OperatorID(ctx context.Context) string {
 	return ""
 }
 
+func IPAddress(ctx context.Context) string {
+	if v, ok := ctx.Value(ctxIPAddressKey).(string); ok {
+		return v
+	}
+	return ""
+}
+
 func Role(ctx context.Context) any {
 	return ctx.Value(ctxRoleKey)
 }
