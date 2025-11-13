@@ -75,6 +75,7 @@ const (
 	ctxRoleKey         ctxKey = "role"
 	ctxTraceIDKey      ctxKey = "trace_id"
 	ctxApiIDKey        ctxKey = "api_id"
+	ctxIPAddressKey    ctxKey = "ip_address"
 )
 
 // Init sets the global logger (log.Logger) and base fields.
@@ -189,6 +190,9 @@ func WithRole(ctx context.Context, role any) context.Context {
 }
 func WithTraceID(ctx context.Context, traceID string) context.Context {
 	return IntoContext(context.WithValue(ctx, ctxTraceIDKey, traceID), "trace_id", traceID)
+}
+func WithIPAddress(ctx context.Context, ipAddress string) context.Context {
+	return IntoContext(context.WithValue(ctx, ctxIPAddressKey, ipAddress), "ip_address", ipAddress)
 }
 
 func RequestID(ctx context.Context) string {
