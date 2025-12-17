@@ -195,32 +195,38 @@ func WithIPAddress(ctx context.Context, ipAddress string) context.Context {
 	return IntoContext(context.WithValue(ctx, ctxIPAddressKey, ipAddress), "ip_address", ipAddress)
 }
 
-func RequestID(ctx context.Context) string {
+func GetRequestID(ctx context.Context) string {
 	if v, ok := ctx.Value(ctxReqIDKey).(string); ok {
 		return v
 	}
 	return ""
 }
+func GetAPIID(ctx context.Context) string {
+	if v, ok := ctx.Value(ctxApiIDKey).(string); ok {
+		return v
+	}
+	return ""
+}
 
-func OperatorID(ctx context.Context) string {
+func GetOperatorID(ctx context.Context) string {
 	if v, ok := ctx.Value(ctxOperatorNameKey).(string); ok {
 		return v
 	}
 	return ""
 }
 
-func IPAddress(ctx context.Context) string {
+func GetIPAddress(ctx context.Context) string {
 	if v, ok := ctx.Value(ctxIPAddressKey).(string); ok {
 		return v
 	}
 	return ""
 }
 
-func Role(ctx context.Context) any {
+func GetRole(ctx context.Context) any {
 	return ctx.Value(ctxRoleKey)
 }
 
-func TraceID(ctx context.Context) string {
+func GetTraceID(ctx context.Context) string {
 	if v, ok := ctx.Value(ctxTraceIDKey).(string); ok {
 		return v
 	}
